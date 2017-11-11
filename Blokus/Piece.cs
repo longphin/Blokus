@@ -9,23 +9,27 @@ namespace Blokus
     public class Piece
     {
         public string name { get; set; }
+        public int count { get; set; } // this will indicate how many of these pieces a player has
         //private int size;
-        private List<int[]> points;
-        private List<int[]> corners;
+        public List<int[]> points;
+        public List<int[]> corners;
+        public int id;
 
-        public Piece(string name, List<int[]> points, List<int[]> corners)
+        public Piece(string name, List<int[]> points, List<int[]> corners, int count = 1)
         {
             this.name = name;
             this.points = points;
             this.corners = corners;
+            this.count = count;
         }
-        public Piece(string name, List<int[]> points)
+        public Piece(string name, List<int[]> points, int count = 1)
         {
             this.name = name;
             this.points = points;
             this.corners = GetCorners(points);
+            this.count = count;
         }
-
+        
         public void PrintPiece()
         {
             int[,] box = new int[12, 12]; // creates an 12x12 box, which will determine where the block pieces are
@@ -42,7 +46,7 @@ namespace Blokus
 
             for(int i=0; i<box.GetLength(0); i++)
             {
-                for(int j=0; j<box.GetLength(1); j++)
+                for(int j=box.GetLength(1)-1; j>=0; j--)
                 {
                     if (box[i, j] == 0) Console.Write("-");
                     if (box[i, j] == 1) Console.Write("X");

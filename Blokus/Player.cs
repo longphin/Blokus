@@ -10,10 +10,14 @@ namespace Blokus
     {
         public string name { get; set; }
         public IDictionary<int[], int> availableCells = new Dictionary<int[], int>();
-        private List<Piece> pieces = new List<Piece>();
+        public List<Piece> pieces = new List<Piece>();
+        private static int ID = 0;
+        public int id;
 
         public Player(string name)
         {
+            ID += 1;
+            id = ID;
             this.name = name;
         }
 
@@ -47,18 +51,36 @@ namespace Blokus
             }
         }
 
-        public bool RotatePiece(string pieceName)
+        public bool RotatePiece(string pieceName, double degrees, out string actualpiecename)
         {
             bool rotated = false;
+            actualpiecename = "N/A";
             foreach(var p in pieces)
             {
-                if (p.name == pieceName)
+                if (p.name.ToLower() == pieceName)
                 {
-                    p.RotatePiece(90.0);
+                    p.RotatePiece(degrees);
+                    actualpiecename = p.name;
                     rotated = true;
                 }
             }
             return (rotated);
+        }
+
+        public bool FlipPiece(string pieceName, out string actualpiecename)
+        {
+            bool flipped = false;
+            actualpiecename = "N/A";
+            foreach (var p in pieces)
+            {
+                if (p.name.ToLower() == pieceName)
+                {
+                    p.FlipPiece();
+                    actualpiecename = p.name;
+                    flipped = true;
+                }
+            }
+            return (flipped);
         }
 
         public void SetCellAsAvailable(int[] loc)

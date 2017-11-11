@@ -3,3 +3,4 @@ D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\bin\Debug\Bl
 D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\obj\Debug\Blokus.dll
 D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\obj\Debug\Blokus.pdb
 D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\obj\Debug\Blokus.csproj.CoreCompileInputs.cache
+D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\obj\Debug\Blokus.csprojResolveAssemblyReference.cache

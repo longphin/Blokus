@@ -6,8 +6,6 @@ namespace Main
 {
     class Program
     {
-        Board board;
-
         static void Main(string[] args)
         {
             // error check if number of args is matched
@@ -51,37 +49,153 @@ namespace Main
             // Ask for input
             foreach (var p in players)
             {
-                Console.WriteLine(p.name + " Please check your available choices");
-                string input = Console.ReadLine();
+                string input = AskPlayerInput(p);
 
-                while(input.ToLower()!="end")
+                while (input!="end")
                 {
-                    switch (input.ToLower())
+                    bool validCommand = false;
+                    string[] splitinput = input.Split(' ');
+
+                    if(input == "board")
                     {
-                        case "open":
-                            p.PrintAvailableCells();
-                            break;
-                        case "pieces":
-                            p.PrintAvailablePieces();
-                            break;
-                        case "rotate":
-                            Console.WriteLine("Rotate what piece?");
-                            bool rotated = p.RotatePiece(Console.ReadLine());
-                            if (rotated == true) Console.WriteLine("Success"); else Console.WriteLine("Unknown piece");
-                            break;
-                        default:
-                            Console.WriteLine("Please enter a valid option.");
-                            break;
+                        validCommand = true;
+                        b.PrintBoardText();
                     }
-                    input = Console.ReadLine();
+
+                    if (input == "open")
+                    {
+                        validCommand = true;
+                        p.PrintAvailableCells();
+                    }
+
+                    if (input == "pieces")
+                    {
+                        validCommand = true;
+                        p.PrintAvailablePieces();
+                    }
+
+                    if (splitinput[0] == "rotate")
+                    {
+                        validCommand = true;
+                        if (splitinput.Length < 2)
+                        {
+                            Console.WriteLine("Rotate requires the piece name, and an optional degree to rotate");
+                            input = AskPlayerInput(p);
+                            continue;
+                        }
+
+                        double degree = 90.0;
+                        if (splitinput.Length == 3)
+                        {
+                            if(Double.TryParse(splitinput[2], out degree))
+                            {
+                                if (degree % 90.0 != 0.0)
+                                {
+                                    Console.WriteLine("Rotation must be a multiple of 90 degrees.");
+                                    input = AskPlayerInput(p);
+                                    continue;
+                                }
+                            }
+                        }
+                        string actualpiecename; // RotatePiece() will give the actual piece name, so if player types in "r", the piece name will match, but say "R".
+                        bool rotated = p.RotatePiece(splitinput[1], degree, out actualpiecename);
+                        if (rotated == true) Console.WriteLine("Rotated " + actualpiecename); else Console.WriteLine("Unknown piece");
+                    }
+
+                    if (splitinput[0] == "flip")
+                    {
+                        validCommand = true;
+                        if (splitinput.Length < 2)
+                        {
+                            Console.WriteLine("Flip requires the piece name");
+                            input = AskPlayerInput(p);
+                            continue;
+                        }
+
+                        string actualpiecename; // RotatePiece() will give the actual piece name, so if player types in "r", the piece name will match, but say "R".
+                        bool flipped = p.FlipPiece(splitinput[1], out actualpiecename);
+                        if (flipped == true) Console.WriteLine("Flipped " + actualpiecename); else Console.WriteLine("Unknown piece");
+                    }
+
+                    if (input == "validate")
+                    {
+                        validCommand = true;
+                        foreach(KeyValuePair<int[], int> entry in p.availableCells)
+                        {
+                            int[] avail = entry.Key;
+                            foreach (var piece in p.pieces)
+                            {
+                                Console.WriteLine("Checking " + piece.name);
+
+                                bool canFit = b.CanPieceFitCell(piece, p.id, new int[] { avail[0], avail[1] });
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                canFit = b.CanPieceFitCell(piece, p.id, new int[] { avail[0], avail[1] });
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                canFit = b.CanPieceFitCell(piece, p.id, new int[] { avail[0], avail[1] });
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                canFit = b.CanPieceFitCell(piece, p.id, new int[] { avail[0], avail[1] });
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                piece.FlipPiece();
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                canFit = b.CanPieceFitCell(piece, p.id, new int[] { avail[0], avail[1] });
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                canFit = b.CanPieceFitCell(piece, p.id, new int[] { avail[0], avail[1] });
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                canFit = b.CanPieceFitCell(piece, p.id, new int[] { avail[0], avail[1] });
+                                if (canFit == true) piece.PrintPiece();
+
+                                piece.RotatePiece(90.0);
+                                piece.FlipPiece();
+                            }
+                        }
+                    }
+
+                    if (validCommand == false)
+                    {
+                        Console.WriteLine("Please enter a valid command.");
+                        PrintValidCommands();
+                    }
+                    input = AskPlayerInput(p);
                 }
             }
+        }
+
+        private static string AskPlayerInput(Player p)
+        {
+            Console.Write(" > [" + p.name + " " + p.id.ToString() + "] ");
+            return(Console.ReadLine().ToLower());
+        }
+
+        private static void PrintValidCommands()
+        {
+            Console.WriteLine("=== List of commands ===");
+            Console.WriteLine(" board: Prints board state.");
+            Console.WriteLine(" open: Shows a list of available open spots on the board.");
+            Console.WriteLine(" pieces: Shows a list remaining pieces that you have.");
+            Console.WriteLine(" rotate [piece name] [degrees]: Rotates a piece 90, 180, or 270 degrees. Defaults to 90.");
+            Console.WriteLine(" flip [piece name]: Flips a piece along the y axis.");
+            Console.WriteLine(" validate: Shows which pieces can be placed.");
+            Console.WriteLine(" end: ends player's turn.");
         }
 
         private static void AddPiecesForPlayer(Player p, int pint)
         {
             p.AddPiece(new Piece("I1",
-    new List<int[]> { new int[] { 0, 0 } }));
+                new List<int[]> { new int[] { 0, 0 } }));
             p.AddPiece(new Piece("I2",
                 new List<int[]> { new int[] { 0, 0 }, new int[] { 0, 1 } }));
             p.AddPiece(new Piece("I3",
