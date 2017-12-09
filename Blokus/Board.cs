@@ -21,19 +21,6 @@ namespace Blokus
             return (board[n, m] == 0 ? true : false);
         }
 
-        /* // need to check if piece can be placed into a slot
-        // checks if a piece can fit the cell. Tests all rotations as well as the flipped + rotations. i.e. 8 tests
-        public bool CanPieceFitCell(int n, int m, Piece p)
-        {
-            bool canFit = false;
-            
-            return (canFit);
-        }
-        public bool DoesPieceOverlap(Piece p)
-        {
-            return (true);
-        }
-        */
         public List<Move> GetPossibleMovesForPlayer(Player p)
         {
             List<Move> res = new List<Move>();
@@ -44,91 +31,92 @@ namespace Blokus
                 {
                     List<Move> possibleMoves = new List<Move>();
                     int[] coord = cellLoc.Key;
-                    
-                    if (piece.validOrientations[0] == true)
+                    bool[] validOrientations = Piece.UniqueOrientations[piece.id];
+
+                    if (validOrientations[0] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
 
                     piece.RotatePiece(90.0);
-                    if (piece.validOrientations[1] == true)
+                    if (validOrientations[1] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
 
                     piece.RotatePiece(90.0);
-                    if (piece.validOrientations[2] == true)
+                    if (validOrientations[2] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
 
                     piece.RotatePiece(90.0);
-                    if (piece.validOrientations[3] == true)
+                    if (validOrientations[3] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
 
                     piece.RotatePiece(90.0);
                     piece.FlipPiece();
-                    if (piece.validOrientations[4] == true)
+                    if (validOrientations[4] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
 
                     piece.RotatePiece(90.0);
-                    if (piece.validOrientations[5] == true)
+                    if (validOrientations[5] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
 
                     piece.RotatePiece(90.0);
-                    if (piece.validOrientations[6] == true)
+                    if (validOrientations[6] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
 
                     piece.RotatePiece(90.0);
-                    if (piece.validOrientations[7] == true)
+                    if (validOrientations[7] == true)
                     {
-                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
-                        if (canFit == true)
+                        List<int> validCenters = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (validCenters.Count > 0)
                         {
-                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            Move m = new Move(p.id, piece.Clone(0), coord, validCenters);
                             possibleMoves.Add(m);
                         }
                     }
@@ -144,16 +132,17 @@ namespace Blokus
             return (res);
         }
 
-        public bool CanPieceFitCell(Piece p, int playerID, int[] cellLoc)
+        public List<int> CanPieceFitCell(Piece p, int playerID, int[] cellLoc)
         {
-            foreach (int[] i in p.points) // each point will get a chance to be placed at the cellLoc
+            List<int> validCenters = new List<int>();
+            for(int i=0; i<p.points.Count; i++) // each point will get a chance to be placed at the cellLoc
             {
                 bool doesEntirePieceFit = true;
-                
-                foreach (int[] j in p.points) // check all of the pieces when i is the center point
+
+                for(int j=0; j<p.points.Count; j++) // check all of the pieces when i is the center point
                 {
-                    int px = cellLoc[0] - i[0] + j[0];
-                    int py = cellLoc[1] - i[1] + j[1];
+                    int px = cellLoc[0] - (p.points[i])[0] + (p.points[j])[0];
+                    int py = cellLoc[1] - (p.points[i])[1] + (p.points[j])[1];
 
                     // if the piece fails any of these conditions, then it can not fit in the cell
                     if (px < 0 || py < 0 || px > board.GetLength(0) - 1 || py > board.GetLength(1) - 1 // piece is outside of bounds
@@ -170,9 +159,10 @@ namespace Blokus
                 }
 
                 if (doesEntirePieceFit == true)
-                    return (true);
+                    //return (true);
+                    validCenters.Add(i);
             }
-            return (false);
+            return (validCenters);
         }
 
         // print the board in text form

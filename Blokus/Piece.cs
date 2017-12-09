@@ -29,20 +29,12 @@ namespace Blokus
             allMaxY;
 
         // an array containing which of the 8 orientations (rotate and flips) are unique.
-        public bool[] validOrientations = new bool[8];
-
-        /*
-        public Piece(string name, List<int[]> points, List<int[]> corners, int count = 1)
+        //public bool[] validOrientations = new bool[8];
+        public static IDictionary<int, bool[]> UniqueOrientations = new Dictionary<int, bool[]>();
+        
+        public Piece(int id, string name, List<int[]> points, int count = 1, int orientation = 0, bool isClone = false)
         {
-            this.name = name;
-            this.points = points;
-            this.corners = corners;
-            this.count = count;
-        }
-        */
-
-        public Piece(string name, List<int[]> points, int count = 1, int orientation = 0, bool isClone = false)
-        {
+            this.id = id;
             this.name = name;
             this.points = new List<int[]>();
             foreach(var point in points)
@@ -62,7 +54,7 @@ namespace Blokus
 
         public Piece Clone(int orientation)
         {
-            Piece newpiece = new Piece(name, points, 1, orientation, true);
+            Piece newpiece = new Piece(id, name, points, 1, orientation, true);
 
             return (newpiece);
         }
@@ -78,7 +70,11 @@ namespace Blokus
         
         private void setUniqueOrientations()
         {
+            // check if this piece has the unique orientations already set
+            if (UniqueOrientations.ContainsKey(id) == true) return;
+
             List<Piece> orientations = new List<Piece>();
+            bool[] validOrientations = new bool[8];
 
             // create orientation clones
             orientations.Add(Clone(0));
@@ -108,6 +104,7 @@ namespace Blokus
             RotatePiece(90.0);
             FlipPiece();
 
+
             // initialize values to 1
             for (int i = 0; i < validOrientations.Length; i++)
             {
@@ -123,6 +120,7 @@ namespace Blokus
                         validOrientations[j] = false;
                 }
             }
+            UniqueOrientations.Add(id, validOrientations);
         }
 
         public void PrintPiece()

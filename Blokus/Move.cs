@@ -8,15 +8,17 @@ namespace Blokus
 {
     public class Move// : IEquatable<Move>
     {
-        int playerID { get; set; }
+        private int playerID { get; set; }
+        private int[] PlacePieceAt = new int[2];
+        private List<int> validCenters = new List<int>();
         public Piece piece { get; set; }
-        int[] PlacePieceAt = new int[2];
 
-        public Move(int playerID, Piece piece, int[] coord)
+        public Move(int playerID, Piece piece, int[] coord, List<int> validCenters)
         {
             this.playerID = playerID;
             this.piece = piece;
             this.PlacePieceAt = coord;
+            this.validCenters = validCenters;
         }
 
         /*
