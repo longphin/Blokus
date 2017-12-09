@@ -1,0 +1,5 @@
+D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\bin\Release\Blokus.dll
+D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\bin\Release\Blokus.pdb
+D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\obj\Release\Blokus.csproj.CoreCompileInputs.cache
+D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\obj\Release\Blokus.dll
+D:\Programming Software\Visual Studio Projects\Blokus\Blokus\Blokus\obj\Release\Blokus.pdb

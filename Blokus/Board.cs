@@ -34,6 +34,116 @@ namespace Blokus
             return (true);
         }
         */
+        public List<Move> GetPossibleMovesForPlayer(Player p)
+        {
+            List<Move> res = new List<Move>();
+
+            foreach(var cellLoc in p.availableCells)
+            {
+                foreach (var piece in p.pieces)
+                {
+                    List<Move> possibleMoves = new List<Move>();
+                    int[] coord = cellLoc.Key;
+                    
+                    if (piece.validOrientations[0] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    if (piece.validOrientations[1] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    if (piece.validOrientations[2] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    if (piece.validOrientations[3] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    piece.FlipPiece();
+                    if (piece.validOrientations[4] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    if (piece.validOrientations[5] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    if (piece.validOrientations[6] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    if (piece.validOrientations[7] == true)
+                    {
+                        bool canFit = CanPieceFitCell(piece, p.id, new int[] { coord[0], coord[1] });
+                        if (canFit == true)
+                        {
+                            Move m = new Move(p.id, piece.Clone(0), coord);
+                            possibleMoves.Add(m);
+                        }
+                    }
+
+                    piece.RotatePiece(90.0);
+                    piece.FlipPiece();
+
+                    //res.AddRange(possibleMoves.Distinct().ToList());
+                    res.AddRange(possibleMoves);
+                }
+            }
+
+            return (res);
+        }
+
         public bool CanPieceFitCell(Piece p, int playerID, int[] cellLoc)
         {
             foreach (int[] i in p.points) // each point will get a chance to be placed at the cellLoc
