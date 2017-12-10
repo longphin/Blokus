@@ -85,7 +85,7 @@ namespace Blokus
 
         public void SetCellAsAvailable(int[] loc)
         {
-            availableCells.Add(new KeyValuePair<int[], int>(loc, 1));
+            if(availableCells.ContainsKey(loc) == false) availableCells.Add(new KeyValuePair<int[], int>(loc, 1));
         }
         public void SetCellAsUnavailable(int[] loc)
         {

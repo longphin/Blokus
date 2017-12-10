@@ -8,10 +8,11 @@ namespace Blokus
 {
     public class Move// : IEquatable<Move>
     {
-        private int playerID { get; set; }
-        private int[] PlacePieceAt = new int[2];
-        private List<int> validCenters = new List<int>();
+        public int[] PlacePieceAt = new int[2];
+        // this will be a list of which part of the Piece can fit. i.e. which x in Piece.points[x] can fit in PlacePieceAt
+        public List<int> validCenters = new List<int>();
         public Piece piece { get; set; }
+        public int playerID { get; set; }
 
         public Move(int playerID, Piece piece, int[] coord, List<int> validCenters)
         {
