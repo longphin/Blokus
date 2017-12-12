@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blokus
 {
@@ -183,12 +180,12 @@ namespace Blokus
                 int py = center[1] + (p.points[j])[1];
                 board[px, py] = player.id;
             }
-
+            
             foreach(var pl in players)
             {
                 UpdatePlayerAvailableCells(pl);
             }
-
+            
             // Update this player's corners by looking at p.corners. If the corner (adjusted with center) is not occupied and is not adjacent to the player's piece,
             //        then mark it as available.
             for(int j = 0; j<p.corners.Count; j++)
@@ -196,11 +193,10 @@ namespace Blokus
                 int px = center[0] + (p.corners[j])[0];
                 int py = center[1] + (p.corners[j])[1];
 
-                if (IsCellValidForPlayer(px, py, m.playerID)
-                    )
+                if (IsCellValidForPlayer(px, py, m.playerID))
                 {
                     // corner is valid, so add it to player's available cells
-                    player.SetCellAsAvailable(p.corners[j]);
+                    player.SetCellAsAvailable(new int[] { px, py });
                 }
             }
             
@@ -264,7 +260,7 @@ namespace Blokus
 
                 for (int j=board.GetLength(1)-1; j>=0; j--)
                 {
-                    Console.Write(board[i, j].ToString() + "\t");
+                    Console.Write((board[i, j]==0 ? "-" : board[i, j].ToString()) + "\t");
                 }
                 Console.Write("\n");
             }
